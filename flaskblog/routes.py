@@ -2,11 +2,12 @@ import os
 # import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from flaskblog import app, db, bcrypt, mail
+from flaskblog import app, db, bcrypt, mail, login_manager, rbac
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm,  RequestResetForm, ResetPasswordForm
-from flaskblog.models import User, Post
+from flaskblog.models import User, Post, Role
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_mail import Message
+from flask_admin import Admin
+
 
 @app.route("/")
 @app.route("/home")
@@ -15,6 +16,13 @@ def home():
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
+@app.route("/admin")
+@rbac.deny(['User'], methods=['GET'])
+def admin():
+    users = User.query.all()
+    posts = Post.query.group_by(Post.id).all()
+    role = Role.query.all()
+    return render_template('admin.html', posts=posts, roles=role, users=users)
 
 @app.route("/about")
 def about():

@@ -11,7 +11,7 @@
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
+                                <span name="email-err">{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
@@ -24,7 +24,7 @@
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
+                                <span name="password-error">{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
@@ -40,7 +40,7 @@
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
             <small class="text-muted ml-2">
-                <a href="{{ url_for('reset_request')}}">Forgot Password?</a>
+                <a name="Forgot-Pass" href="{{ url_for('reset_request')}}">Forgot Password?</a>
             </small>
         </form>
     </div>

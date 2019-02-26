@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h1>Welcome to Admin Page!</h1>
+
+  <div class="content-section">
+    <h3>All users</h3>
+      <p class='text-muted'>
+      <table style="width:100%">
+  <tr>
+    <th>User ID</th>
+    <th>User name</th>
+    <th>User Email</th>
+    <th>User Role</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+  <th class="list-group-item-light">{{ user.id }}</th>
+  <th class="list-group-item-light">{{ user.username }}</th>
+  <th class="list-group-item-light">{{ user.email }}</th>
+  {% for role in roles %}
+  {% for r in role.roles %}
+  {% if user.id == r.id %}
+  <th class="list-group-item-light">{{ role.name }}</th>
+  {% endif %}
+  {% endfor %}
+  {% endfor %}
+  {% endfor %}
+</tr>
+</table>
+</p>
+  </div>
+
+{% endblock content %}
